@@ -27,6 +27,7 @@ void Hello(){
     KOOR(33, 15); cout <<    "|____||____| |________| |________| |________|  `.___.'  ";
     Sleep(3000);
     cout << "\e[0m";
+    system("cls");
 }
 void loading(){
     mvprintw(12, 55, "Loading...");
@@ -159,8 +160,10 @@ int main() {
                     noecho();
                 login();
             } else if (choice == 2) {
-                KOOR(20, 10); cout << "Thank you!";
+                system("cls");
+		KOOR(20, 10); cout << "Thank you!";
                 Sleep(5000);
+		system("cls");
                 break;
             }
             initscr();
