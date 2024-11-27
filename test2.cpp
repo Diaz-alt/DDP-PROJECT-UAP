@@ -80,7 +80,7 @@ void registration() {
         file << username << endl;
         KOOR(20,15);cout << "Registration successful!";
     } else {
-        KOOR(20,15);cout << "Error opening file!";
+        KOOR(20,15);cout << "Register failed";
     }
     file.close();
     KOOR(20,17);cout << "Please wait";
@@ -148,7 +148,7 @@ int main() {
             choice = (choice + 1) % 3;
         } else if (key == KEY_UP) {
             choice = (choice + 2) % 3;
-        } else if (key == '\n') {
+        } else if (key == 10) {
             endwin();
             if (choice == 0) {
             	    curs_set(1);
