@@ -3,7 +3,6 @@
 #include <windows.h>
 #include <iostream>
 #include <fstream>
-#include <string>
 using namespace std;
 
 void KOOR(int x, int y) {
@@ -30,17 +29,18 @@ void Hello(){
     cout << "\e[0m";
 }
 void loading(){
-    mvprintw(15, 70, "Loading...");
-        mvprintw(16, 60, "-----------------------------");
-        mvprintw(17, 59, "|                             |");
-        mvprintw(18, 60, "-----------------------------");
+    mvprintw(12, 55, "Loading...");
+        mvprintw(13, 45, "-----------------------------");
+        mvprintw(14, 44, "|                             |");
+        mvprintw(15, 45, "-----------------------------");
 
     for(int j = 0; j < 29; j++){
         attron(COLOR_PAIR(2));
-        mvprintw(17, 60 + j, " ");
+        mvprintw(14, 45 + j, " ");
         refresh();
         Sleep(100);
     }
+    Sleep(2000);
 }
 
 void RegisART() {
@@ -80,7 +80,7 @@ void registration() {
         file << username << endl;
         KOOR(20,15);cout << "Registration successful!";
     } else {
-        KOOR(20,15);cout << "Register failed";
+        KOOR(20,15);cout << "Registration failed";
     }
     file.close();
     KOOR(20,17);cout << "Please wait";
@@ -151,15 +151,21 @@ int main() {
         } else if (key == 10) {
             endwin();
             if (choice == 0) {
-            	    curs_set(1);
+            	    curs_set(0);
+                    noecho();
                 registration();
             } else if (choice == 1) {
-            	    curs_set(1);
+            	    curs_set(0);
+                    noecho();
                 login();
             } else if (choice == 2) {
+                KOOR(20, 10); cout << "Thank you!";
+                Sleep(5000);
                 break;
             }
             initscr();
+            curs_set(0);
+            noecho();
             bkgd(COLOR_PAIR(1));
             keypad(stdscr, TRUE);
         }
