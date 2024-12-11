@@ -136,12 +136,9 @@ void login() {
     Sleep(5000);
 }
 
-// Ukuran labirin
 const int rows = 12;
 const int cols = 15;
 
-// Representasi labirin
-// 'S' = Start, 'E' = End, '#' = Wall, ' ' = Path, 'P' = Player
 char labirin[rows][cols] = {
     {'#', '#', '#', '#', '#', '#', '#', '#', '#', '#','#', '#', '#', '#','#'},
     {'#', 'S', ' ', ' ', '#', ' ', '#', ' ', '#', '#','#', '#', '#', '#','#'},
@@ -157,14 +154,14 @@ char labirin[rows][cols] = {
     {'#', '#', '#', '#', '#', '#', '#', '#', '#', '#','#', '#', '#', '#','#'}
 };
 
-int playerRow = 1, playerCol = 1; // Posisi awal pemain (S)
+int playerRow = 1, playerCol = 1;
 
 void printLabirin() {
-    system("cls"); // Membersihkan layar
+    system("cls");
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < cols; j++) {
             if (i == playerRow && j == playerCol)
-                cout << "P "; // Menampilkan pemain
+                cout << "P ";
             else
                 cout << labirin[i][j] << " ";
         }
@@ -176,12 +173,11 @@ void movePlayer(char direction) {
     int newRow = playerRow;
     int newCol = playerCol;
 
-    if (direction == 'w') newRow--; // Atas
-    else if (direction == 's') newRow++; // Bawah
-    else if (direction == 'a') newCol--; // Kiri
-    else if (direction == 'd') newCol++; // Kanan
+    if (direction == 'w') newRow--;
+    else if (direction == 's') newRow++;
+    else if (direction == 'a') newCol--;
+    else if (direction == 'd') newCol++;
 
-    // Periksa apakah langkah valid
     if (labirin[newRow][newCol] == ' ' || labirin[newRow][newCol] == 'E') {
         playerRow = newRow;
         playerCol = newCol;
@@ -189,15 +185,14 @@ void movePlayer(char direction) {
 }
 
 void labyrinthGame() {
-    cout << "=== Labirin Mode Medium ===" << endl;
+    cout << "=== Labirin Mode Easy ===" << endl;
     cout << "Gunakan WASD untuk bergerak dan cari jalan ke E!\n";
 
     while (true) {
         printLabirin();
-        char input = _getch(); // Mendapatkan input dari pemain
+        char input = _getch();
         movePlayer(input);
 
-        // Periksa apakah pemain mencapai titik akhir
         if (labirin[playerRow][playerCol] == 'E') {
             printLabirin();
             cout << "Selamat! Anda berhasil menyelesaikan labirin!" << endl;
