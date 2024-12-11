@@ -59,7 +59,7 @@ void movePlayer(char direction) {
 }
 
 int main() {
-    cout << "=== Labirin Mode Besar (20x20) ===" << endl;
+    cout << "=== Labirin Mode Normal (20x20) ===" << endl;
     cout << "Gunakan WASD untuk bergerak dan cari jalan ke E!\n";
 
     while (true) {
