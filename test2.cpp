@@ -132,6 +132,46 @@ void login() {
     Sleep(5000);
 }
 
+void chooseDifficulty() {
+    const char* difficulties[] = { "Easy", "Normal", "Hard" };
+    int choice = 0;
+    int key;
+
+    while (true) {
+        clear();
+        mvprintw(5, 10, "Choose Difficulty:");
+        for (int i = 0; i < 3; i++) {
+            if (i == choice)
+                attron(A_REVERSE);
+            mvprintw(7 + i, 12, difficulties[i]);
+            attroff(A_REVERSE);
+        }
+        key = getch();
+
+        if (key == KEY_DOWN) {
+            choice = (choice + 1) % 3;
+        } else if (key == KEY_UP) {
+            choice = (choice + 2) % 3;
+        } else if (key == 10) {
+            clear();
+            switch (choice) {
+                case 0:
+                    mvprintw(10, 10, "You chose Easy (12x15 maze)");
+                    break;
+                case 1:
+                    mvprintw(10, 10, "You chose Normal (20x20 maze)");
+                    break;
+                case 2:
+                    mvprintw(10, 10, "You chose Hard (30x30 maze)");
+                    break;
+            }
+            refresh();
+            Sleep(2000);
+            return;
+        }
+    }
+}
+
 int main() {
     system("cls");
     Hello();
@@ -167,7 +207,7 @@ int main() {
         } else if (key == 10) {
             endwin();
             if(choice == 0){
-                    
+                chooseDifficulty();
             } else if(choice == 1) {
             	    curs_set(0);
                     noecho();
@@ -193,3 +233,4 @@ int main() {
     endwin();
     return 0;
 }
+
