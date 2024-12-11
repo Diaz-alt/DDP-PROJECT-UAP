@@ -3,7 +3,6 @@
 #include <windows.h>
 #include <iostream>
 #include <fstream>
-#include <conio.h>
 using namespace std;
 
 void KOOR(int x, int y) {
@@ -19,7 +18,7 @@ void Hello() {
     Sleep(100);
     KOOR(33, 11); cout << "|_   ||   _| |_   __  | |_   _|    |_   _|     .'   `.  ";
     Sleep(100);
-    KOOR(33, 12); cout << "  | |__| |     | |_ \_|   | |        | |      /  .-.  \\ ";
+    KOOR(33, 12); cout << "  | |__| |     | |_ \\_|   | |        | |      /  .-.  \\ ";
     Sleep(100);
     KOOR(33, 13); cout << "  |  __  |     |  _| _    | |   _    | |   _  | |   | | ";
     Sleep(100);
@@ -44,6 +43,7 @@ void loading() {
         Sleep(100);
     }
     Sleep(2000);
+    endwin();
 }
 
 void RegisART() {
@@ -186,11 +186,11 @@ void movePlayer(char direction) {
 
 void labyrinthGame() {
     cout << "=== Labirin Mode Easy ===" << endl;
-    cout << "Gunakan WASD untuk bergerak dan cari jalan ke E!\n";
+    cout << "Gunakan WASD untuk bergerak dan cari jalan ke E!" << endl;
 
     while (true) {
         printLabirin();
-        char input = _getch();
+        char input = getch();
         movePlayer(input);
 
         if (labirin[playerRow][playerCol] == 'E') {
@@ -209,6 +209,7 @@ int main() {
     init_pair(1, COLOR_YELLOW, COLOR_BLACK);
     init_pair(2, COLOR_BLACK, COLOR_YELLOW);
     loading();
+    initscr();
     bkgd(COLOR_PAIR(1));
     noecho();
     curs_set(0);
@@ -227,7 +228,7 @@ int main() {
             mvprintw(7 + i, 12, options[i]);
             attroff(A_REVERSE);
         }
-        key = _getch();
+        key = getch();
 
         if (key == KEY_DOWN) {
             choice = (choice + 1) % 4;
@@ -236,12 +237,20 @@ int main() {
         } else if (key == 10) {
             endwin();
             if (choice == 0) {
+                curs_set(0);
+                noecho();
                 registration();
             } else if (choice == 1) {
+                curs_set(0);
+                noecho();
                 login();
             } else if (choice == 2) {
+                curs_set(0);
+                noecho();
                 labyrinthGame();
             } else if (choice == 3) {
+                curs_set(0);
+                noecho();
                 system("cls");
                 KOOR(20, 10); cout << "Thank you!";
                 Sleep(3000);
