@@ -71,7 +71,7 @@ void LoginART() {
 string user = "guest";
 
 void easy(){
-
+	
 }
 
 void normal(){
