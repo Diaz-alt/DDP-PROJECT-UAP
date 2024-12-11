@@ -70,6 +70,68 @@ void LoginART() {
 
 string user = "guest";
 
+void easy(){
+
+}
+
+void normal(){
+
+}
+
+void hard(){
+
+}
+
+void gamemode(){
+    system("cls");
+    const char* options[] = { "Easy", "Normal", "Hard", "Cancel"};
+    curs_set(0);
+    noecho();
+    int choice = 0;
+    int key;
+    while (true) {
+        clear();
+        for (int i = 0; i < 4; i++) {
+            if (i == choice)
+                attron(A_REVERSE);
+            mvprintw(7 + i, 12, options[i]);
+            attroff(A_REVERSE);
+        }
+        key = getch();
+        
+        if (key == KEY_DOWN) {
+            choice = (choice + 1) % 4;
+        } else if (key == KEY_UP) {
+            choice = (choice + 3) % 4;
+        } else if (key == 10) {
+            endwin();
+            if(choice == 0){
+                curs_set(0);
+                noecho();
+                easy();
+            } else if(choice == 1) {
+            	curs_set(0);
+                noecho();
+                normal();
+            } else if(choice == 2) {
+            	curs_set(0);
+                noecho();
+                hard();
+            } else if(choice == 3) {
+                system("cls");
+                KOOR(20, 9);    cout << "==============";
+                KOOR(20, 10);   cout << "Please wait...";
+                KOOR(20, 11);   cout << "==============";
+                Sleep(2000);
+                system("cls");
+                break;
+            }
+            curs_set(0);
+            noecho();
+        }
+    }
+}
+
 void registration() {
 	curs_set(1);
     ifstream fileread("user.txt",ios::app);
@@ -132,46 +194,6 @@ void login() {
     Sleep(5000);
 }
 
-void chooseDifficulty() {
-    const char* difficulties[] = { "Easy", "Normal", "Hard" };
-    int choice = 0;
-    int key;
-
-    while (true) {
-        clear();
-        mvprintw(5, 10, "Choose Difficulty:");
-        for (int i = 0; i < 3; i++) {
-            if (i == choice)
-                attron(A_REVERSE);
-            mvprintw(7 + i, 12, difficulties[i]);
-            attroff(A_REVERSE);
-        }
-        key = getch();
-
-        if (key == KEY_DOWN) {
-            choice = (choice + 1) % 3;
-        } else if (key == KEY_UP) {
-            choice = (choice + 2) % 3;
-        } else if (key == 10) {
-            clear();
-            switch (choice) {
-                case 0:
-                    mvprintw(10, 10, "You chose Easy (12x15 maze)");
-                    break;
-                case 1:
-                    mvprintw(10, 10, "You chose Normal (20x20 maze)");
-                    break;
-                case 2:
-                    mvprintw(10, 10, "You chose Hard (30x30 maze)");
-                    break;
-            }
-            refresh();
-            Sleep(2000);
-            return;
-        }
-    }
-}
-
 int main() {
     system("cls");
     Hello();
@@ -192,7 +214,7 @@ int main() {
     while (true) {
         clear();
         mvprintw(5, 10, ("Welcome, " + user + "!").c_str());
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 4; i++) {
             if (i == choice)
                 attron(A_REVERSE);
             mvprintw(7 + i, 12, options[i]);
@@ -201,13 +223,13 @@ int main() {
         key = getch();
 
         if (key == KEY_DOWN) {
-            choice = (choice + 1) % 3;
+            choice = (choice + 1) % 4;
         } else if (key == KEY_UP) {
-            choice = (choice + 2) % 3;
+            choice = (choice + 3) % 4;
         } else if (key == 10) {
             endwin();
             if(choice == 0){
-                chooseDifficulty();
+                    gamemode();
             } else if(choice == 1) {
             	    curs_set(0);
                     noecho();
@@ -233,4 +255,3 @@ int main() {
     endwin();
     return 0;
 }
-
