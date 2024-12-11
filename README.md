@@ -9,4 +9,4 @@ Andhika Akbar Pratama
 ##
 ### Terima Kasih
 
-![](https://github.com/Quekar/Gif-placeholder/blob/main/cat_gun.gif)
+![](https://github.com/Quekar/Gif-placeholder/blob/main/6B3TM_-_1766099078004506951.gif)
