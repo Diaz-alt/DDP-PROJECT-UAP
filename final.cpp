@@ -68,6 +68,66 @@ void LoginART() {
     cout << "\e[0m";
 }
 
+void easy(){
+}
+
+void normal(){
+}
+
+void hard(){
+}
+
+void gamemode(){
+    system("cls");
+    initscr();
+    curs_set(0);
+    noecho();
+    const char* options[] = {"Easy", "Normal", "Hard", "Cancel"};
+    int choice = 0;
+    int key;
+    while(true){
+        clear();
+        fo(int i = 0; i < 4; i++){
+            if(i == choice)
+                attron(A_REVERSE);
+            mvprintw(7 + i, 12, options[i]);
+            attroff(A_REVERSE);
+        }
+        key = getch();
+        
+        if(key == KEY_DOWN){
+            choice = (choice + 1) % 4;
+        } else if(key == KEY_UP){
+            choice = (choice + 3) % 4;
+        } else if (key == 10){
+            endwin();
+            if(choice == 0){
+                curs_set(0);
+                noecho();
+                easy();
+            } else if(choice == 1){
+            	curs_set(0);
+                noecho();
+                normal();
+            } else if(choice == 2){
+            	curs_set(0);
+                noecho();
+                hard();
+            } else if(choice == 3){
+                system("cls");
+                KOOR(20, 9);    cout << "==============";
+                KOOR(20, 10);   cout << "Please wait...";
+                KOOR(20, 11);   cout << "==============";
+                Sleep(2000);
+                system("cls");
+                break;
+            }
+            curs_set(0);
+            noecho();
+        }
+    }
+}
+
 string user = "guest";
 
 void registration() {
@@ -145,14 +205,14 @@ int main() {
     curs_set(0);
     keypad(stdscr, TRUE);
 
-    const char* options[] = { "Register", "Login", "Exit" };
+    const char* options[] = {"Start", "Register", "Login", "Exit" };
     int choice = 0;
     int key;
 
     while (true) {
         clear();
         mvprintw(5, 10, ("Welcome, " + user + "!").c_str());
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 4; i++) {
             if (i == choice)
                 attron(A_REVERSE);
             mvprintw(7 + i, 12, options[i]);
@@ -161,26 +221,30 @@ int main() {
         key = getch();
 
         if (key == KEY_DOWN) {
-            choice = (choice + 1) % 3;
+            choice = (choice + 1) % 4;
         } else if (key == KEY_UP) {
-            choice = (choice + 2) % 3;
+            choice = (choice + 3) % 4;
         } else if (key == 10) {
             endwin();
             if (choice == 0) {
-            	    curs_set(0);
+             	    curs_set(0);
                     noecho();
-                registration();
+		    gamemode();
             } else if (choice == 1) {
-            	    curs_set(0);
+             	    curs_set(0);
+                    noecho();
+                registration();           	    
+            } else if (choice == 2) {
+                    curs_set(0);
                     noecho();
                 login();
-            } else if (choice == 2) {
-                system("cls");
+            } else if (choice == 3) {
+		 system("cls");
                 KOOR(20, 10); cout << "Thank you!";
                 Sleep(3000);
                 system("cls");
                 break;
-            }
+	    }
             initscr();
             curs_set(0);
             noecho();
