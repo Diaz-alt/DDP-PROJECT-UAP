@@ -68,29 +68,43 @@ void LoginART() {
     cout << "\e[0m";
 }
 
+string user = "guest";
 
 void registration() {
 	curs_set(1);
-    ofstream file("userdata.txt", ios::app);
+    ifstream fileread("user.txt",ios::app);
+    ofstream file("user.txt", ios::app);
     string username;
+    string line;
+    int cek;
     system("cls");
 	RegisART();
     KOOR(20, 13); cout << "Enter a username to register : ";
     cin >> username;
-    if (file.is_open()) {
-        file << username << endl;
-        KOOR(20,15);cout << "Registration successful!";
-    } else {
-        KOOR(20,15);cout << "Registration failed";
+    if(fileread.is_open()){
+        while(getline(fileread, line)){
+            cek=1;
+            break;
+        }
     }
-    file.close();
-    KOOR(20,17);cout << "Please wait";
+    fileread.close();
+    if(cek==1){
+        KOOR(20, 15); cout << "Username already registered";
+        KOOR(20, 16); cout << "Registration failed!";
+    } else {
+        if(file.is_open()){
+            file << username << endl;
+            KOOR(20, 15); cout << "Registration successful!";
+        }
+        file.close();
+    }
+    KOOR(20,17);cout << "Please wait...";
     Sleep(5000);
 }
 
 void login() {
 	curs_set(1);
-    ifstream file("userdata.txt");
+    ifstream fileread("user.txt");
     string username, line;
     bool login_success = false;
     system("cls");
@@ -98,14 +112,15 @@ void login() {
     KOOR(20, 13); cout << "Enter your username : ";
     cin >> username;
 
-    if (file.is_open()) {
-        while (getline(file, line)) {
+    if (fileread.is_open()) {
+        while (getline(fileread, line)) {
             if (line == username) {
                 login_success = true;
+                user = username;
                 break;
             }
         }
-        file.close();
+        fileread.close();
     }
 
     if (login_success) {
@@ -136,7 +151,7 @@ int main() {
 
     while (true) {
         clear();
-        mvprintw(5, 10, "Welcome");
+        mvprintw(5, 10, ("Welcome, " + user + "!").c_str());
         for (int i = 0; i < 3; i++) {
             if (i == choice)
                 attron(A_REVERSE);
