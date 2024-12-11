@@ -227,7 +227,7 @@ int main() {
             mvprintw(7 + i, 12, options[i]);
             attroff(A_REVERSE);
         }
-        key = getch();
+        key = _getch();
 
         if (key == KEY_DOWN) {
             choice = (choice + 1) % 4;
