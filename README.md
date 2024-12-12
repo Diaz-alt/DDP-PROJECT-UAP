@@ -3,9 +3,9 @@ Project UAP DDP
 ## Program Labirin
 Program ini dibuat untuk menyelesaikan projek akhir DDP
 ## Nama Anggota
-Andhika Akbar Pratama
-<br/> M. Diaz Al Hafidz
-<br/> Zahira Adiah Safa
+Andhika Akbar Pratama (2417051056)
+<br/> M. Diaz Al Hafidz Cahya M (2417051071)
+<br/> Zahira Adiah Safa (2417051012)
 ##
 ### Terima Kasih
 
