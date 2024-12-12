@@ -80,7 +80,7 @@ void maze(const char (&maze)[Height][Width]) {
             mvaddch(y, x, maze[y][x]);
         }
     }
-    refresh();
+    refresh();
 }
 
 
