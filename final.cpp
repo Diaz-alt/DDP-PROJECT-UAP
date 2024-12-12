@@ -12,38 +12,36 @@ void KOOR(int x, int y) {
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
 }
 
-void Hello() {
+void Hello(){
     cout << "\e[33m";
-    KOOR(33, 10); cout << " ____  ____   ________   _____      _____        ___    ";
+    KOOR(33, 10); cout <<    " ____  ____   ________   _____      _____        ___    ";
     Sleep(100);
-    KOOR(33, 11); cout << "|_   ||   _| |_   __  | |_   _|    |_   _|     .'   `.  ";
+    KOOR(33, 11); cout <<    "|_   ||   _| |_   __  | |_   _|    |_   _|     .'   `.  ";
     Sleep(100);
-    KOOR(33, 12); cout << "  | |__| |     | |_ \\_|   | |        | |      /  .-.  \\ ";
+    KOOR(33, 12); cout <<   "  | |__| |     | |_ \\_|   | |        | |      /  .-.  \\ ";
     Sleep(100);
-    KOOR(33, 13); cout << "  |  __  |     |  _| _    | |   _    | |   _  | |   | | ";
+    KOOR(33, 13); cout <<    "  |  __  |     |  _| _    | |   _    | |   _  | |   | | ";
     Sleep(100);
-    KOOR(33, 14); cout << " _| |  | |_   _| |__/ |  _| |__/ |  _| |__/ | \\  `-'  / ";
+    KOOR(33, 14); cout <<    " _| |  | |_   _| |__/ |  _| |__/ |  _| |__/ | \\  `-'  / ";
     Sleep(100);
-    KOOR(33, 15); cout << "|____||____| |________| |________| |________|  `.___.'  ";
+    KOOR(33, 15); cout <<    "|____||____| |________| |________| |________|  `.___.'  ";
     Sleep(3000);
     cout << "\e[0m";
     system("cls");
 }
-
-void loading() {
+void loading(){
     mvprintw(12, 55, "Loading...");
-    mvprintw(13, 45, "-----------------------------");
-    mvprintw(14, 44, "|                             |");
-    mvprintw(15, 45, "-----------------------------");
+        mvprintw(13, 45, "-----------------------------");
+        mvprintw(14, 44, "|                             |");
+        mvprintw(15, 45, "-----------------------------");
 
-    for (int j = 0; j < 29; j++) {
+    for(int j = 0; j < 29; j++){
         attron(COLOR_PAIR(2));
         mvprintw(14, 45 + j, " ");
         refresh();
         Sleep(100);
     }
     Sleep(2000);
-    endwin();
 }
 
 void RegisART() {
@@ -80,7 +78,7 @@ void maze(const char (&maze)[Height][Width]) {
             mvaddch(y, x, maze[y][x]);
         }
     }
-    refresh();
+    refresh();
 }
 
 template <size_t height, size_t width>
@@ -122,6 +120,7 @@ void movePlayer(const char (&maze)[height][width]) {
     refresh();
     Sleep(3000);
 }
+
 const char easy[13][15] = {
     {'|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|'},
     {'|', 'O', ' ', ' ', '|', ' ', '|', ' ', '|', '|', '|', '|', '|', '|', '|'},
@@ -138,7 +137,7 @@ const char easy[13][15] = {
     {'P', 'r', 'e', 's', 's', ' ', 'E', 's', 'c', '=', 'B', 'a', 'c', 'k', '*'}
 };
 
- onst char medium[21][20] = {
+const char medium[21][20] = {
     {'|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|'},
     {'|', 'O', ' ', ' ', '|', ' ', ' ', ' ', '|', ' ', '|', ' ', ' ', ' ', ' ', ' ', ' ', '|', 'X', '|'},
     {'|', '|', '|', ' ', '|', ' ', '|', ' ', '|', ' ', '|', ' ', '|', '|', '|', '|', ' ', '|', ' ', '|'},
@@ -186,43 +185,102 @@ const char hard[21][30] = {
     {'P', 'r', 'e', 's', 's', ' ', 'E', 's', 'c', '=', 'B', 'a', 'c', 'k', '*', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '}
 };
 
+void gamemode(){
+    system("cls");
+    initscr();
+    keypad(stdscr, TRUE);
+    noecho();
+    curs_set(0);
+    const char* options[] = { "Easy", "Normal", "Hard", "Cancel"};
+    int choice = 0;
+    int key;
+    while (true) {
+        clear();
+        for (int i = 0; i < 4; i++) {
+            if (i == choice)
+                attron(A_REVERSE);
+            mvprintw(7 + i, 12, options[i]);
+            attroff(A_REVERSE);
+        }
+        key = getch();
+        
+        if (key == KEY_DOWN) {
+            choice = (choice + 1) % 4;
+        } else if (key == KEY_UP) {
+            choice = (choice + 3) % 4;
+        } else if (key == 10) {
+            if(choice == 0){
+                noecho();
+                curs_set(1);
+                curs_set(0);
+                maze(easy);
+            movePlayer(easy);
+            break;
+            } else if(choice == 1) {
+                noecho();
+                curs_set(1);
+                curs_set(0);
+                maze(medium);
+            movePlayer(medium);
+            break;
+            } else if(choice == 2) {
+                noecho();
+                curs_set(1);
+            	curs_set(0);
+                maze(hard);
+            movePlayer(hard);
+            break;
+            } else if(choice == 3) {
+                system("cls");
+                KOOR(20, 9);    cout << "==============";
+                KOOR(20, 10);   cout << "Please wait...";
+                KOOR(20, 11);   cout << "==============";
+                Sleep(2000);
+                system("cls");
+                break;
+            }
+            curs_set(0);
+            noecho();
+        }
+    }
+}
 
 void registration() {
-    curs_set(1);
-    ifstream fileread("user.txt", ios::app);
+	curs_set(1);
+    ifstream fileread("user.txt");
     ofstream file("user.txt", ios::app);
     string username;
     string line;
     int cek = 0;
     system("cls");
-    RegisART();
+	RegisART();
     KOOR(20, 13); cout << "Enter a username to register : ";
     cin >> username;
-    if (fileread.is_open()) {
-        while (getline(fileread, line)) {
-            if (line == username) {
-                cek = 1;
-                break;
+    if(fileread.is_open()){
+        while(getline(fileread, line)){
+            if(line == username){
+            cek = 1;
+            break;
             }
         }
     }
     fileread.close();
-    if (cek == 1) {
+    if(cek==1){
         KOOR(20, 15); cout << "Username already registered";
         KOOR(20, 16); cout << "Registration failed!";
     } else {
-        if (file.is_open()) {
+        if(file.is_open()){
             file << username << endl;
             KOOR(20, 15); cout << "Registration successful!";
         }
         file.close();
     }
-    KOOR(20, 17); cout << "Please wait...";
+    KOOR(20,17);cout << "Please wait...";
     Sleep(5000);
 }
 
 void login() {
-    curs_set(1);
+	curs_set(1);
     ifstream fileread("user.txt");
     string username, line;
     bool login_success = false;
@@ -243,11 +301,11 @@ void login() {
     }
 
     if (login_success) {
-        KOOR(20, 15); cout << "Login successful!";
+        KOOR(20,15);cout << "Login successful!";
     } else {
-        KOOR(20, 15); cout << "Username not found";
+        KOOR(20,15);cout << "Username not found";
     }
-    KOOR(20, 17); cout << "Please wait";
+    KOOR(20,17);cout << "Please wait";
     Sleep(5000);
 }
 
@@ -259,13 +317,12 @@ int main() {
     init_pair(1, COLOR_YELLOW, COLOR_BLACK);
     init_pair(2, COLOR_BLACK, COLOR_YELLOW);
     loading();
-    initscr();
     bkgd(COLOR_PAIR(1));
     noecho();
     curs_set(0);
     keypad(stdscr, TRUE);
 
-    const char* options[] = { "Register", "Login", "Play Labyrinth", "Exit" };
+    const char* options[] = { "Play", "Register", "Login", "Exit" };
     int choice = 0;
     int key;
 
@@ -286,21 +343,17 @@ int main() {
             choice = (choice + 3) % 4;
         } else if (key == 10) {
             endwin();
-            if (choice == 0) {
-                curs_set(0);
-                noecho();
+            if(choice == 0){
+                    gamemode();
+            } else if(choice == 1) {
+            	    curs_set(0);
+                    noecho();
                 registration();
-            } else if (choice == 1) {
-                curs_set(0);
-                noecho();
+            } else if(choice == 2) {
+            	    curs_set(0);
+                    noecho();
                 login();
-            } else if (choice == 2) {
-                curs_set(0);
-                noecho();
-                labyrinthGame();
-            } else if (choice == 3) {
-                curs_set(0);
-                noecho();
+            } else if(choice == 3) {
                 system("cls");
                 KOOR(20, 10); cout << "Thank you!";
                 Sleep(3000);
