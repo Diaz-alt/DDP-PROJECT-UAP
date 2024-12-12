@@ -83,7 +83,45 @@ void maze(const char (&maze)[Height][Width]) {
     refresh();
 }
 
+template <size_t height, size_t width>
+void movePlayer(const char (&maze)[height][width]) {
+    int x = 1, y = 1;
+    int key;
 
+    while ((key = getch()) != 27) {
+        mvaddch(y, x, ' ');
+
+        switch (key) {
+        case KEY_UP:
+            if (y > 0 && (maze[y - 1][x] == ' ' || maze[y - 1][x] == 'X')) y--;
+            break;
+        case KEY_DOWN:
+            if (y < height - 1 && (maze[y + 1][x] == ' ' || maze[y + 1][x] == 'X')) y++;
+            break;
+        case KEY_LEFT:
+            if (x > 0 && (maze[y][x - 1] == ' ' || maze[y][x - 1] == 'X')) x--;
+            break;
+        case KEY_RIGHT:
+            if (x < width - 1 && (maze[y][x + 1] == ' ' || maze[y][x + 1] == 'X')) x++;
+            break;
+        }
+        mvaddch(y, x, 'O');
+        refresh();
+
+        if (maze[y][x] == 'X') {
+            clear();
+            mvprintw(height / 2, (width - 10) / 2, "Finished the maze");
+            refresh();
+            Sleep(2000);
+            break;
+        }
+    }
+    clear();
+    mvprintw((height / 2) + 1, (width -9) / 2, "Please Wait...");
+    mvprintw((height / 2) + 3, (width -9) / 2, "Back to Main Menu");
+    refresh();
+    Sleep(3000);
+}
 const char easy[13][15] = {
     {'|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|', '|'},
     {'|', 'O', ' ', ' ', '|', ' ', '|', ' ', '|', '|', '|', '|', '|', '|', '|'},
